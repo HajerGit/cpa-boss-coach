@@ -61,6 +61,34 @@ st.markdown(
     /* ---- overall layout ---- */
     .main .block-container { max-width: 760px; padding-top: 2rem; }
 
+    /*
+     * Dark-mode contrast fix
+     * All custom boxes keep a light background regardless of the OS/browser
+     * colour scheme. Without an explicit text colour the browser may inherit
+     * Streamlit's dark-theme foreground (near-white), making text invisible.
+     * We pin every box — and all its descendants — to #1a1a1a so the
+     * contrast ratio never drops below 15:1 against the lightest background
+     * used here (#f0f4ff), well above the WCAG AA threshold of 4.5:1.
+     */
+
+    /* shared dark-text rule applied to every custom box */
+    .boss-banner,
+    .coach-banner,
+    .scenario-box,
+    .feedback-correct,
+    .feedback-incorrect {
+        color: #1a1a1a !important;
+    }
+
+    /* cascade to all inline/block children so nested tags inherit the value */
+    .boss-banner *,
+    .coach-banner *,
+    .scenario-box *,
+    .feedback-correct *,
+    .feedback-incorrect * {
+        color: #1a1a1a !important;
+    }
+
     /* ---- persona banners ---- */
     .boss-banner {
         background: #f0f4ff;
@@ -106,15 +134,16 @@ st.markdown(
     }
 
     /* ---- summary table ---- */
-    .summary-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .summary-table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: #ffffff; }
     .summary-table th, .summary-table td {
         text-align: left; padding: 0.5rem 0.75rem;
         border-bottom: 1px solid #e5e7eb;
+        color: #1a1a1a !important;   /* dark-mode fix: pin text colour */
     }
     .summary-table th { background: #f7f8fa; font-weight: 600; }
 
     /* ---- progress bar label ---- */
-    .progress-label { font-size: 0.82rem; color: #57606a; margin-top: 0.25rem; }
+    .progress-label { font-size: 0.82rem; margin-top: 0.25rem; opacity: 0.85; }
     </style>
     """,
     unsafe_allow_html=True,
